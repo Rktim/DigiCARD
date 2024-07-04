@@ -1,3 +1,0 @@
-streamlit
-PIL 10.2.0
-qrcode
