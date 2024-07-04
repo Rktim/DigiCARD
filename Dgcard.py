@@ -3,8 +3,8 @@ from PIL import Image, ImageDraw, ImageFont
 import qrcode
 
 def create_digital_card(biodata, image_path):
-    card_width = 592
-    card_height = 507
+    card_width = 681
+    card_height = 599
     background_color = ('#B2A4D4')
     card = Image.new('RGB', (card_width, card_height), background_color)
     
@@ -33,14 +33,14 @@ def create_digital_card(biodata, image_path):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
+        box_size=8,  # Reduced box size to shrink the QR code
         border=4,
     )
     qr.add_data(qr_data)
     qr.make(fit=True)
     
     qr_img = qr.make_image(fill='black', back_color='white')
-    qr_img = qr_img.resize((150, 150))
+    qr_img = qr_img.resize((120, 120))  # Reduced size of the QR code
     
     qr_position = (card_width - 200, card_height - 200)
     card.paste(qr_img, qr_position)
