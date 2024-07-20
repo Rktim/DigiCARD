@@ -33,14 +33,14 @@ def create_digital_card(biodata, image_path):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=8,  # Reduced box size to shrink the QR code
+        box_size=8,  
         border=4,
     )
     qr.add_data(qr_data)
     qr.make(fit=True)
     
     qr_img = qr.make_image(fill='black', back_color='white')
-    qr_img = qr_img.resize((120, 120))  # Reduced size of the QR code
+    qr_img = qr_img.resize((120, 120))  
     
     qr_position = (card_width - 200, card_height - 200)
     card.paste(qr_img, qr_position)
@@ -58,14 +58,14 @@ occupation = st.text_input("Enter your occupation:")
 email = st.text_input("Enter your email:")
 phone = st.text_input("Enter your phone number:")
 address = st.text_input("Enter your address:")
-linkedin_id = st.text_input("Enter your LinkedIn ID:")
-github_repo = st.text_input("Enter your GitHub Repo:")
+linkedin_id = st.text_input("Enter your LinkedIn ID (optional):")
+github_repo = st.text_input("Enter your GitHub Repo (optional):")
 instagram_id = st.text_input("Enter your Instagram ID (optional):")
 facebook_id = st.text_input("Enter your Facebook ID (optional):")
 uploaded_image = st.file_uploader("Upload your image", type=['png', 'jpg', 'jpeg'])
 
 if st.button("Generate Digital Card"):
-    if not all([name, age, gender, occupation, email, phone, address, linkedin_id, github_repo, uploaded_image]):
+    if not all([name, age, gender, occupation, email, phone, address, uploaded_image]):
         st.error("Please fill in all required fields and upload an image.")
     else:
         biodata = {
@@ -76,14 +76,16 @@ if st.button("Generate Digital Card"):
             "Email": email,
             "Phone": phone,
             "Address": address,
-            "LinkedIn ID": linkedin_id,
-            "GitHub Repo": github_repo
         }
         
         if instagram_id:
             biodata["Instagram ID"] = instagram_id
         if facebook_id:
             biodata["Facebook ID"] = facebook_id
+        if linkedin_id:
+            biodata["LinkedIn ID"] = linkedin_id
+        if github_repo:
+            biodata["GitHub Repo"] = github_repo
 
         with open("uploaded_image.png", "wb") as f:
             f.write(uploaded_image.getbuffer())
